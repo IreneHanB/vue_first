@@ -12,6 +12,7 @@ Vue.use(VueRouter)
 var router = new VueRouter({
     routes:[
         // path中没有./home  写成/home ！！！
+        {path:'/',redirect:'/home'},
        {path:'/home',component:HomeContainer},
        {path:'/member',component:MemberContainer},
        {path:'/shopcar',component:ShopcarContainer},

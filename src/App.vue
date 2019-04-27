@@ -4,7 +4,10 @@
         <mt-header fixed title="iBook"></mt-header>
 
 		<!-- 中间 -->
-		<router-view></router-view>
+		<transition mode="out-in">
+			<router-view></router-view>
+		</transition>
+		
 
         <!-- 底部 -->
         <nav class="mui-bar mui-bar-tab">
@@ -25,7 +28,7 @@
 				<span class="mui-tab-label">搜索</span>
 			</router-link>
 		</nav>
-       <h1>123</h1>
+    
     </div>
 </template>
 <script>
@@ -34,6 +37,23 @@
 </script>
 <style lang="scss" scoped>
 .app-container{
-    padding-top:40px 
+    padding-top:40px;
+	overflow-x: hidden;
+}
+
+//进去之前
+.v-enter{
+	opacity: 0;
+	transform: translateX(100%);
+}
+.v-leave-to{
+	opacity: 0;
+	transform: translateX(-100%);
+	position: absolute;
+}
+.v-enter-active,
+.v-leave-active{
+	opacity: 1;
+	transition: all 0.5s ease;
 }
 </style>
