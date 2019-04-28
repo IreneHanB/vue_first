@@ -7,16 +7,21 @@ import MemberContainer from './components/tabbar/MemberContainer.vue'
 import ShopcarContainer from './components/tabbar/ShopcarContainer.vue'
 import SearchContainer from './components/tabbar/SearchContainer.vue'
 
+import NewsList from './components/news/NewsList.vue'
+
+
 Vue.use(VueRouter)
 
 var router = new VueRouter({
     routes:[
-        // path中没有./home  写成/home ！！！
+        // path中没有./home  写成/home ！！！ 一定要和页面上写的对应起来
         {path:'/',redirect:'/home'},
        {path:'/home',component:HomeContainer},
        {path:'/member',component:MemberContainer},
        {path:'/shopcar',component:ShopcarContainer},
-       {path:'/search',component:SearchContainer}
+       {path:'/search',component:SearchContainer},
+
+       {path:'/home/newslist',component:NewsList}
 
     ],
     linkActiveClass:'mui-active'

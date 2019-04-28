@@ -18,6 +18,7 @@
 
 ##制作首页轮播图布局
 
+
 ##加载首页轮播图数据
 
 ##加载首页轮播图数据
@@ -25,5 +26,15 @@
 2.使用vue-resource的this.$http.get
 3.获取到的数据，要保存到data身上
 4.使用v-for循环渲染每个item项
+
+
+##改造 九宫格 区域样式 
+
+##改造新闻资讯路由链接
+
+##新闻资讯 页面 制作
+1.绘制页面（MUI 中 media-list）
+2.使用vue-resource获取数据(https://www.apiopen.top/journalismApi)
+3.渲染真实数据
 
 

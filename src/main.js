@@ -3,6 +3,7 @@ import Vue from 'vue'
 
 import VueResource from 'vue-resource'
 Vue.use(VueResource) 
+//Vue.http.options.root = 'https://www.apiopen.top/'
 
 import router from './router.js'
 
