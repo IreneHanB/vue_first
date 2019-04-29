@@ -9,6 +9,7 @@ import SearchContainer from './components/tabbar/SearchContainer.vue'
 
 import NewsList from './components/news/NewsList.vue'
 
+import Newsinfo from './components/news/Newsinfo.vue'
 
 Vue.use(VueRouter)
 
@@ -21,7 +22,8 @@ var router = new VueRouter({
        {path:'/shopcar',component:ShopcarContainer},
        {path:'/search',component:SearchContainer},
 
-       {path:'/home/newslist',component:NewsList}
+       {path:'/home/newslist',component:NewsList},
+       {path:'/home/newsinfo/:docid',component:Newsinfo}
 
     ],
     linkActiveClass:'mui-active'

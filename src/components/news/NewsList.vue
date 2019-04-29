@@ -1,18 +1,21 @@
 <template>
     <div>
         <h1>新闻资讯</h1>
+        <h1>新闻资讯</h1>
+        <h1>新闻资讯</h1>
+        <h1>新闻资讯</h1>
         <ul class="mui-table-view">
 				<li class="mui-table-view-cell mui-media" v-for="item in newslist" :key="item.docid">
-					<a href="javascript:;">
-						<img class="mui-media-object mui-pull-left" :src="item.picInf[i].url">
+					<router-link :to="'/home/newsinfo/' + item.docid">
+						<img class="mui-media-object mui-pull-left" :src="item.picInfo[0].url">
 						<div class="mui-media-body">
-							<h1>看到空对地</h1>
+							<h1>{{item.title}}</h1>
 							<p class='mui-ellipsis'>
-                                <span>发表时间：2012-12-12 12:12:23</span>
-                                <span>点击次数：0次</span>
+                                <span>发表时间：{{item.ptime | dataFormat('YYYY-MM-DD')}}</span>
+                                <span>点击次数：{{item.tcount}}次</span>
 							</p>
 						</div>
-					</a>
+					</router-link>
 				</li>
 				
 
@@ -38,6 +41,7 @@ export default {
                 if(result.code =200){
                     
                     this.newslist = result.body.data.tech
+                    //console.log(result.body.data.tech[0].docid)
                 }else{
                     Toast('获取新闻列表失败')
                 }
