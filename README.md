@@ -59,11 +59,13 @@ Vue.component(Header.name,Header);//手动注册
 4.git status 应该有 On branch master nothing to commit，working tree clean
 以上步骤只是提交到了本地.git中去，还没有和 远端仓库做任何关联
 公钥查看：我的电脑>用户>17500>.ssh>id_rsa.pub
-具体查看我的博客园账号写的步骤。
+具体查看我的博客园账号（一般网友）写的步骤。
+
 ##用传统方式把修改过的代码上传到码云
 1. git add .
 2. git commit -m "提交信息"
 3. git push
+
 
 ##制作首页App组件
 1.完成Header区域，使用的是Mint-UI中的Header组件
