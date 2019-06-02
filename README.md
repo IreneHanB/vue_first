@@ -1,4 +1,28 @@
-##准备做一个 阅读、书籍类 小项目
+##准备做一个 阅读、书籍类 小项目？
+***
+首先套用准备好的model，npm i
+App.vue 根组件分为三个部分
+1.顶部Header
+2.中间路由区域router-view
+3.底部Tabber
+当点击路由连接的时候，切换地址栏，地址栏的改变被路由给监听到，路由监听到则会进行路由的匹配，匹配到之后就展示对应的组件，组件放到rouer-view中
+***
+怎么把Vue.app放到页面中：
+在入口文件中：
+import Vue 并且new一个vue实例
+import app组件 并渲染
+
+
+```
+import Vue from 'vue'
+import app from './App.vue'
+
+var vm = new Vue({
+  el:'#app',//指定要控制的哪一个元素
+  render:c =>(app)//render函数,里面有一个c形参，调用一下，渲染app组件
+})
+```
+***
 
 ##用传统方式把修改过的代码上传到码云
 1. git add .

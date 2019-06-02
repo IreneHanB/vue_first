@@ -1,3 +1,4 @@
+<!-- 根组件 -->
 <template>
     <div class="app-container">
         <!-- 顶部Header区域 -->
