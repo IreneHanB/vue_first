@@ -1,16 +1,56 @@
-#准备做一个 阅读、书籍类 小项目？
-***
-首先套用准备好的model，npm i
-App.vue 根组件分为三个部分
-1.顶部Header
-2.中间路由区域router-view
-3.底部Tabber
-当点击路由连接的时候，切换地址栏，地址栏的改变被路由给监听到，路由监听到则会进行路由的匹配，匹配到之后就展示对应的组件，组件放到rouer-view中
-***
-怎么把Vue.app放到页面中：
-在入口文件中：
-import Vue 并且new一个vue实例
-import app组件 并渲染
+# 准备做一个 阅读、书籍类 小项目？
+
+## 说在前面（github萌新使用）
+
+把本地项目托管到码云中
+在.gitignore中定义一下 忽略文件 node_modules
+(在webstorm中有.idea,这是文件夹，里面放了你自己webstorm相关的配置，比如说tab键是空格还是tab键，空格是4个还是两个，这个.idea也没有必要上传上去)
+同样还有 .vscode
+.git(这个文件夹存了一些版本)
+
+要有readme.md 、LICENSE 开源协议（这里copy了mui的）
+可阅读知乎的 “主流开源协议之间有何异同” （https://www.zhihu.com/question/19568896）
+
+### 创建本地的仓储
+
+1.git init 初始化一下  就会生成 .git文件
+2.git status 
+3.git add . 
+3.git commit -m"提交信息"
+4.git status 应该有 On branch master nothing to commit，working tree clean
+以上步骤只是提交到了本地.git中去，还没有和 远端仓库做任何关联
+公钥查看：我的电脑>用户>17500>.ssh>id_rsa.pub
+具体查看我的博客园账号（一般网友）写的步骤。
+
+### 用传统方式把修改过的代码上传到码云
+
+1. git add .
+2. git commit -m "提交信息"
+3. git push
+
+## 概要介绍
+
+我的vue初体验，里面内容不重要，开源的接口失效也是常有的事。
+
+## 详细过程
+
+### 大体布局
+
+- 套用准备好的model，npm i
+
+- App.vue 根组件分为三个部分
+  1.顶部Header
+  2.中间路由区域router-view
+  3.底部Tabber
+
+  当点击路由连接的时候，切换地址栏，地址栏的改变被路由给监听到，路由监听到则会进行路由的匹配，匹配到之后就展示对应的组件，组件放到rouer-view中
+
+
+
+- 怎么把Vue.app放到页面中：
+  在入口文件中：
+  import Vue 并且new一个vue实例
+  import app组件 并渲染
 
 
 ```
@@ -23,9 +63,11 @@ var vm = new Vue({
 })
 ```
 ****
-###顶部Header
+#### 顶部Header
+
 使用mint-ui组件，打开mint-ui（http://mint-ui.github.io/#!/zh-cn），开始使用，找到header
 使用<mt-header>，则要在 main.js 中按需导入Mint-UI中的组件
+
 ```
 import { Header} from "mint-ui"
 Vue.component(Header.name,Header);//手动注册
@@ -33,39 +75,57 @@ Vue.component(Header.name,Header);//手动注册
 **注意：这里的header固定定位了，不占标准流了，下面的元素就顶上去了，所以可以给最外层这个大盒子加个padding-top（在App.vue的框住三个区域的div添加一个class="app-container",在下面style中写样式）**
 
 ****
-###底部Tabber
+#### 底部Tabber
+
 哈哈哈因为mint-ui太丑了，所以用mui
 找到mui-master文件夹>examples>hello-mui>examples>tabber.html
 右键检查
-1.复制 <nav>中的内容
-2.在main.js中导入MUI的样式
-`import './lib/mui/css/mui.css'`
 
+1. 复制 <nav>中的内容
 
-##把本地项目托管到码云中
-在.gitignore中定义一下 忽略文件 node_modules
-(在webstorm中有.idea,这是文件夹，里面放了你自己webstorm相关的配置，比如说tab键是空格还是tab键，空格是4个还是两个，这个.idea也没有必要上传上去)
-同样还有 .vscode
-.git(这个文件夹存了一些版本)
- 
-要有readme.md 、LICENSE 开源协议（这里copy了mui的）
-可阅读知乎的 “主流开源协议之间有何异同” （https://www.zhihu.com/question/19568896）
+2. 在main.js中导入MUI的样式
+   `import './lib/mui/css/mui.css'`
 
-创建本地的仓储
-1.git init 初始化一下  就会生成 .git文件
-2.git status 
-3.git add . 
-3.git commit -m"提交信息"
-4.git status 应该有 On branch master nothing to commit，working tree clean
-以上步骤只是提交到了本地.git中去，还没有和 远端仓库做任何关联
-公钥查看：我的电脑>用户>17500>.ssh>id_rsa.pub
-具体查看我的博客园账号（一般网友）写的步骤。
+3. 更改图标
 
-##用传统方式把修改过的代码上传到码云
-1. git add .
-2. git commit -m "提交信息"
-3. git push
+   - 查看>examples>hello-mui>examples>icons.html和icons-extra.html
 
+   - 购物车图标用到了icons-extra.css，所以需要 手动将用到的文件放到 lib mui css中，在main.js中导入一下`import'./lib/mui/css/icons-extra.css'`
+
+   - 同时这个css依赖于mui-icons-extra.ttf字体库，所以也把他手动放到lib mui fonts下
+
+4. 把下面的tabbar改成路由链接
+
+   - 检查package.json中有没有 vue-router的包（npm install vue-router）
+
+   - 有的话就可以配置路由了，在main.js导入
+
+     ```
+     //4.1导入路由的包
+     import VueRouter from 'vue-router'
+     //4.2安装路由
+     Vue.use(VueRouter)
+     //4.3导入自己的router.js路由模块
+     import router from './router.js'
+     //4.4 把router写在vm实例中，挂载路由对象到VM实例上
+     router
+     ```
+
+   - 打开App.vue，在底部Tabbar区域中，将 <a>标签改成<router-link>，同时href属性也改成 t0 , to="/home" 
+
+   - 选中路由高亮
+
+     在router.js中，
+
+     ```
+     var router = new VueRouter({
+         routes:[
+         ],
+         linkActiveClass:'mui-active'//覆盖默认的路由高亮的类，默认的类叫做router-link-active
+     })
+     ```
+
+     高亮就完成了！
 
 ##制作首页App组件
 1.完成Header区域，使用的是Mint-UI中的Header组件
