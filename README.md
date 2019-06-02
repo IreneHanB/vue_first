@@ -1,4 +1,4 @@
-##准备做一个 阅读、书籍类 小项目？
+#准备做一个 阅读、书籍类 小项目？
 ***
 首先套用准备好的model，npm i
 App.vue 根组件分为三个部分
@@ -52,9 +52,14 @@ Vue.component(Header.name,Header);//手动注册
 可阅读知乎的 “主流开源协议之间有何异同” （https://www.zhihu.com/question/19568896）
 
 创建本地的仓储
-1.git init 初始化一下
-
-
+1.git init 初始化一下  就会生成 .git文件
+2.git status 
+3.git add . 
+3.git commit -m"提交信息"
+4.git status 应该有 On branch master nothing to commit，working tree clean
+以上步骤只是提交到了本地.git中去，还没有和 远端仓库做任何关联
+公钥查看：我的电脑>用户>17500>.ssh>id_rsa.pub
+具体查看我的博客园账号写的步骤。
 ##用传统方式把修改过的代码上传到码云
 1. git add .
 2. git commit -m "提交信息"
