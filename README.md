@@ -22,7 +22,38 @@ var vm = new Vue({
   render:c =>(app)//render函数,里面有一个c形参，调用一下，渲染app组件
 })
 ```
-***
+****
+###顶部Header
+使用mint-ui组件，打开mint-ui（http://mint-ui.github.io/#!/zh-cn），开始使用，找到header
+使用<mt-header>，则要在 main.js 中按需导入Mint-UI中的组件
+```
+import { Header} from "mint-ui"
+Vue.component(Header.name,Header);//手动注册
+```
+**注意：这里的header固定定位了，不占标准流了，下面的元素就顶上去了，所以可以给最外层这个大盒子加个padding-top（在App.vue的框住三个区域的div添加一个class="app-container",在下面style中写样式）**
+
+****
+###底部Tabber
+哈哈哈因为mint-ui太丑了，所以用mui
+找到mui-master文件夹>examples>hello-mui>examples>tabber.html
+右键检查
+1.复制 <nav>中的内容
+2.在main.js中导入MUI的样式
+`import './lib/mui/css/mui.css'`
+
+
+##把本地项目托管到码云中
+在.gitignore中定义一下 忽略文件 node_modules
+(在webstorm中有.idea,这是文件夹，里面放了你自己webstorm相关的配置，比如说tab键是空格还是tab键，空格是4个还是两个，这个.idea也没有必要上传上去)
+同样还有 .vscode
+.git(这个文件夹存了一些版本)
+ 
+要有readme.md 、LICENSE 开源协议（这里copy了mui的）
+可阅读知乎的 “主流开源协议之间有何异同” （https://www.zhihu.com/question/19568896）
+
+创建本地的仓储
+1.git init 初始化一下
+
 
 ##用传统方式把修改过的代码上传到码云
 1. git add .
