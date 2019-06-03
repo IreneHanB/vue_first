@@ -126,6 +126,85 @@ Vue.component(Header.name,Header);//手动注册
      ```
 
      高亮就完成了！
+   
+5. 点击tabbar路由链接，展示对应的路由组件
+
+   - 在src中创建 components 文件夹，创建 tabbar文件夹   首页-HomeContainer.vue...
+
+   - .vue基本结构 
+
+     ```
+     <template>
+         <div>
+         	<h1>HomeContainer.vue文件</h1>
+         </div>
+     </template>
+     <script>
+     
+     </script>
+     <style lang="scss" scoped>
+     
+     </style>
+     
+     ```
+
+   - 在路由 router.js中做路由链接和组件的对应关系
+
+     - 导入对应的路由组件
+
+       `import HomeContainer from './components/tabbar/HomeContainer.vue'`
+
+     - 配置路由的对应关系
+
+       ```
+       var router = new VueRouter({
+           routes:[
+               // path中没有./home  写成/home ！！！ 一定要和页面上写的对应起来
+               {path:'/',redirect:'/home'},
+              {path:'/home',component:HomeContainer},
+           ],
+           linkActiveClass:'mui-active'
+       })
+       
+       ```
+
+   - 在App.vue中放<router-view>
+
+***
+
+#### 中间router-view
+
+​	在App.vue中放<router-view>
+
+
+
+
+
+### 首页设计步骤
+
+------
+
+#### 轮播图制作
+
+- 找mint-ui中的swipe，在main.js中导入一下
+
+  ```
+  import { Header,Swipe,SwipeItem,Button } from "mint-ui"
+  Vue.component(Swipe.name,Swipe),
+  Vue.component(SwipeItem.name,SwipeItem)//同时注册一下，导入的两个组件
+  ```
+
+- 在HomeContainer.vue中写入 <swipe>一系列标签
+
+- 还需要在下面写样式，设置轮播区域的高度
+
+- 给每一个轮播图的图片（item）添加样式
+
+  .mint-swipe-item:nth-child(1){
+
+  }
+
+
 
 ##制作首页App组件
 1.完成Header区域，使用的是Mint-UI中的Header组件
