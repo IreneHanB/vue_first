@@ -200,16 +200,158 @@ Vue.component(Header.name,Header);//手动注册
 
 - 给每一个轮播图的图片（item）添加样式
 
-  .mint-swipe-item:nth-child(1){
+  ```css
+.mint-swipe-item{
+    //这个是交集选择器  
+          &:nth-child(1){
+              background-color: blueviolet;
+          }
+          &:nth-child(2){
+              background-color: blue;
+          }
+          &:nth-child(3){
+              background-color: cyan;
+          }
+          img{
+              width:100%;
+              height: 100%;
+          }
+      }
+  ```
+  
+  交集选择器和后代选择器的区别：
+  
+  ```
+  <div class="rod">
+  
+       <p class="roe"></p> 
+  
+       <p></p>
+  
+       <p></p>
+  
+  </div>
+  ```
+  
+  交集选择器：获取的是同级中的某一个p.roe{   }两个选择器之间没有空格
+  
+  后代选择器:   获取的是父级下的所有子孙 .rod p{ } 两个选择器之间有一个空格
 
+- 获取数据之前，用vue-resource来获取，查看package.json中是否有“vue-resource”，没有的话 npm i vue-resource -S
+
+  然后在main.js中导入一下vue-resource
+
+  ```
+  //导入vue-resource
+  import VueResource from 'vue-resource'
+  //安装vue-resource
+  Vue.use(VueResource) 
+  ```
+
+- 获取数据
+
+  业务逻辑写在HomeContainer.vue的<script>中
+
+  ```
+  export default { //导出对象
+      data(){
+          return {
+              lunbotuList:[]//保存轮播图的数组
+          }
+      },
+      created(){
+          this.getLunbotu();
+      },
+      methods:{
+          getLunbotu(){//获取轮播图数据的方法
+              this.$http.get("https://www.apiopen.top/novelApi").then(result =>{
+                   console.log(result.body);
+                  if(result.body.code=200){
+                      this.lunbotuList = result.body.data
+                  }else{
+                      Toast('轮播图加载失败')
+                  }
+             })
+          }
+      }
+      
   }
+  ```
+
+  循环渲染<mt-swipe-item>
+
+  ```
+   <mt-swipe-item v-for="item in lunbotuList" :key="item.bid">
+      <!-- 注意src，我们要计算表达式，要在普通属性前面加上v-bind（：） -->
+      <img :src="item.book_cover" alt="">
+   </mt-swipe-item>
+  ```
+
+  给图片设置样式
+
+  ```
+   .mint-swipe-item{
+       img{
+                  width:100%;
+                  height: 100%;
+              }
+    }
+  ```
+
+***
 
 
+
+#### 六宫格制作
+
+- 找mui中的 grid(各自)-default，右键查看源码，拷贝<ul>中的代码，改成自己要的title和个数。
+
+- 发现背景颜色不是白色，发现body的背景不是白色，直接给他一个style，还有的没变成白色的样式，就用它的类来改变。
+
+- 在src中新建images文件夹，用于放 6个小图标。将代码中的span改成<img> ,并给img添加css样式
+
+  
+
+------
+
+####  组件切换的动画效果
+
+- 切换到home页面，home{path:'/',redirect:'/home'}
+
+- 在App.view中，将有动画的部分用<transition></transition>包起来，这里包起来的只有 <router-view>
+
+- 在<style>中设置两组类
+
+  ```
+  //1.解决页面有滚动条
+  .app-container{
+  	overflow-x: hidden;
+  }
+  
+  .v-enter{
+  	opacity: 0;
+  	transform: translateX(100%);
+  }
+  .v-leave-to{
+  	opacity: 0;
+  	transform: translateX(-100%);
+  	position: absolute;//解决了进入页面向上飘的问题，玄学编程，不知道why
+  }
+  .v-enter-active,
+  .v-leave-active{
+  	opacity: 1;
+  	transition: all 0.5s ease;
+  }
+  ```
+
+  
 
 ##制作首页App组件
 1.完成Header区域，使用的是Mint-UI中的Header组件
 2.制作底部的Tabber区域，使用的是MUI的Tabbar
 3.要在中间区域放置一个 router-view 来展示路由匹配到的组件
+
+
 
 ## 用tabber改为router-link
 
