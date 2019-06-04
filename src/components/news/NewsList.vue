@@ -1,13 +1,10 @@
 <template>
-    <div>
-        <h1>新闻资讯</h1>
-        <h1>新闻资讯</h1>
-        <h1>新闻资讯</h1>
-        <h1>新闻资讯</h1>
+    <div> 
         <ul class="mui-table-view">
 				<li class="mui-table-view-cell mui-media" v-for="item in newslist" :key="item.docid">
 					<router-link :to="'/home/newsinfo/' + item.docid">
-						<img class="mui-media-object mui-pull-left" :src="item.picInfo[0].url">
+						<img class="mui-media-object mui-pull-left" src="http://cms-bucket.ws.126.net/2019/06/04/efe68a48dc224047adf7ede36456aa01.png">
+                        <!-- src的图片 有问题，未获取到 -->
 						<div class="mui-media-body">
 							<h1>{{item.title}}</h1>
 							<p class='mui-ellipsis'>

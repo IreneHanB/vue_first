@@ -22,7 +22,7 @@
 公钥查看：我的电脑>用户>17500>.ssh>id_rsa.pub
 具体查看我的博客园账号（一般网友）写的步骤。
 
-### 用传统方式把修改过的代码上传到码云
+### 用传统方式把修改过的代码上传到github
 
 1. git add .
 2. git commit -m "提交信息"
@@ -72,7 +72,7 @@ var vm = new Vue({
 import { Header} from "mint-ui"
 Vue.component(Header.name,Header);//手动注册
 ```
-**注意：这里的header固定定位了，不占标准流了，下面的元素就顶上去了，所以可以给最外层这个大盒子加个padding-top（在App.vue的框住三个区域的div添加一个class="app-container",在下面style中写样式）**
+**注意：这里的header固定定位了，不占标准流了，下面的元素就顶上去了，所以可以给最外层这个大盒子加个padding-top（在App.vue的框住三个区域的div添加一个class="app-container",在下面style中写样式）,同时在后期会发现，下面也有被挡掉的同款问题，所以padding-bottom:50px也加上**
 
 ****
 #### 底部Tabber
@@ -322,7 +322,7 @@ Vue.component(Header.name,Header);//手动注册
 
 - 在<style>中设置两组类
 
-  ```
+  ```scss
   //1.解决页面有滚动条
   .app-container{
   	overflow-x: hidden;
@@ -342,6 +342,87 @@ Vue.component(Header.name,Header);//手动注册
   	opacity: 1;
   	transition: all 0.5s ease;
   }
+  ```
+
+
+------
+
+#### 六宫格第一个子组件制作
+
+- 将 a链接 改成<router-link to="/home/newsList">
+
+- 创建对应的组件，在src-components-news下创建 newsList.vue
+
+- 要在 router.js中匹配
+
+  ```
+  import NewsList from './components/news/NewsList.vue'
+  route:[
+  {path：'/home/newslist',component:NewsList}
+  ]
+  ```
+
+- 在mui中找，有一个media-list.html正是需要的，右键检查，拷贝<ul>, 并把其中的图片改了，内容和格式改成自己想要的。
+
+- 获取数据
+
+  在main.js中全局配置  请求地址的前缀 ，这里使用到了vue-resource，所以要放在 vue-resource安装之后
+
+  ```
+  //设置请求的根路径
+  Vue.http.options.root='http://vue.studyit.io';
+  ```
+
+  
+
+  ```
+  import { Toast } from "mint-ui"
+  export default { //导出对象
+      data(){
+          return {
+          newsList:[]//新闻列表
+          }
+      },
+      created(){
+          this.getNewsList();
+      },
+      methods:{
+          getNewsList(){
+          //注意请求地址前面不要带 /  ，vue-resource前面是不带斜线的！！！
+          //后面用.then 预先指定成功的回调
+              this.$http.get("novelApi").then(result =>{
+                   console.log(result.body);
+                  if(result.body.status ===0){
+                      this.lunbotuList = result.body.data
+                  }else{
+                      Toast('轮播图加载失败')
+                  }
+             })
+          }
+      }
+      
+  }
+  ```
+
+- 渲染数据
+
+  ```
+  <ul class="mui-table-view">
+  <li class="mui-table-view-cell mui-media" v-for="item in newslist" :key="item.docid">
+  					<router-link :to="'/home/newsinfo/' + item.docid">
+  						<img class="mui-media-object mui-pull-left" :src="item.picInfo[0].url">
+  						<div class="mui-media-body">
+  							<h1>{{item.title}}</h1>
+  							<p class='mui-ellipsis'>
+                                  <span>发表时间：{{item.ptime | dataFormat('YYYY-MM-DD')}}</span>
+                                  <span>点击次数：{{item.tcount}}次</span>
+  							</p>
+  						</div>
+  					</router-link>
+  				</li>
+  				
+  
+  			</ul>
   ```
 
   
