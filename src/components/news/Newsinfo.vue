@@ -1,6 +1,6 @@
 <template>
     <div class="newsinfo-container">
-        <!-- 没有r 不是router 啊宝贝！ -->
+        
         <h1 class="title">{{newsinfo.title}}</h1>
         <p class="subtitle">
             <span>发表时间:{{newsinfo.ptime | dataFormat}}</span>
@@ -23,6 +23,7 @@ import comment from '../subcomponents/comment.vue'
 export default {
   data(){
       return {
+         // 没有r 不是router 啊宝贝！ 
           id:this.$route.params.docid,
           newsinfo:[]
       }
@@ -36,29 +37,10 @@ export default {
   methods:{
       getnewsInfo(){
           this.$http.get('https://www.apiopen.top/journalismApi').then(result=>{
+              console.log(result.body.data)
               if(result.body.code = 200){
-                  switch (this.$route.params.docid){
-                     case 'EDV0TLQ300097U7R':{
-                         this.newsinfo = result.body.data.tech[0];
-                         break;
-                    }
-                    case 'EDUDFCTE00097U7R':{
-                        this.newsinfo = result.body.data.tech[1];
-                        break;
-                    }
-                    case 'EDV66BGI00097U7R':{
-                        this.newsinfo = result.body.data.tech[2];
-                        break;
-                    }
-                    case 'EDTNBS6V00097U7S':{
-                        this.newsinfo = result.body.data.tech[3];
-                        break;
-                    }
-                    case 'EDV5KNM10511C9DR':{
-                        this.newsinfo = result.body.data.tech[4];
-                        break;
-                    }
-                  }
+                  
+                  this.newsinfo = result.body.data.tech[0];
                   
                   //console.log(result.body.data.tech)
                   //this.newsinfo = result.body.data.tech

@@ -344,7 +344,6 @@ Vue.component(Header.name,Header);//手动注册
   }
   ```
 
-
 ------
 
 #### 六宫格第一个子组件制作
@@ -409,7 +408,7 @@ Vue.component(Header.name,Header);//手动注册
   ```
   <ul class="mui-table-view">
   <li class="mui-table-view-cell mui-media" v-for="item in newslist" :key="item.docid">
-  					<router-link :to="'/home/newsinfo/' + item.docid">
+  					<a :to="'/home/newsinfo/' + item.docid">
   						<img class="mui-media-object mui-pull-left" :src="item.picInfo[0].url">
   						<div class="mui-media-body">
   							<h1>{{item.title}}</h1>
@@ -418,12 +417,170 @@ Vue.component(Header.name,Header);//手动注册
                                   <span>点击次数：{{item.tcount}}次</span>
   							</p>
   						</div>
-  					</router-link>
+  					</a>
   				</li>
   				
   
   			</ul>
   ```
+
+  
+
+------
+
+#### 全局过滤器——设置用到的时间
+
+因为在newslist、newsinfo和其他子组件中也用到了时间，所以在main.js中设置全局过滤器
+
+```
+npm i moment -S
+
+//导入格式化时间的插件
+import moment from 'moment'
+
+//定义全局的过滤器
+Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
+    return moment(dataStr).format(pattern)
+})
+```
+
+
+
+***
+
+#### 新闻列表跳转到新闻详情的路由
+
+- 将NewsList.vue中的a标签放在router-link
+
+  ```
+  <router-link :to="'/home/newsinfo/'+item.id"
+  ```
+
+- 在router.js
+
+  ```
+  import Newsinfo from './components/news/Newsinfo.vue'
+  {path:'/home/newsinfo/:docid',component:Newsinfo}
+  ```
+
+- 在Newsinfo.vue中 通过$route.params.id来获取id
+
+  ```
+  export default{
+  	data(){
+  		reurn{
+  		//将URL地址中传过来的id值，挂载在data上，方便以后调用
+  		id:this.$route.params.id
+  		}
+  	}
+  }
+  ```
+
+- 在Newsinfo.vue中弄好布局和样式
+
+- 获取渲染数据，同时修改每项要拿到的数据，如 newsinfo.title, {{newsinfo.add_time|dataFormat}}
+
+  ```
+  created(){
+  	this.getNewsInfo()
+  },
+  methods:{
+  	getNewsInfo(){
+  		this.$http.get('api/getnew/'+this.id).then(result =>{
+              if(result.body.status=0){
+  				this.newsinfo = result.body.message[0];
+              }else{
+  				Toast('获取失败')
+              }
+  		})
+  	}
+  }
+  ```
+
+- 查看每个newlist的info，设置样式，让图片 width：100%，并删除scoped（玄学编程，删了就好了）???
+
+  scoped删除容易造成全局污染，但是这里的样式都在 newsinfo-container这个类下面。
+
+#### 评论部分
+
+因为多处用到了这个评论，所以把它抽离为一个单独的组件
+
+- 在components文件夹里新建一个文件夹 subcomponents ，创建一个单独的comment.vue组件模板
+
+- 手动在newsinfo.vue中导入comment组件，并在父组件中，使用‘components’属性，将导入的组件注册为自己的子组件
+
+  ```
+  import comment from '../subcomponents/comment.vue'
+  export default{
+  	compoments:{
+  		//用来注册子组件的节点
+  		'comment-box':comment
+  	}
+  }
+  ```
+
+  
+
+- 将注册子组件时候的注册名称,以标签形式在页面中引用 即可。
+
+  ```
+  <comment-box :id="this.id"></comment-box>//父组件向子组件传值，传简单数据，数据绑定就行
+  ```
+
+- 在comment.vue中进行样式和内容的布局，使用mint-ui的button按钮
+
+- 获取数据
+
+  ```
+  data(){
+  	return{
+  		pageIndex:1
+  		comments:[]
+  	}
+  }，
+  created(){
+  	this.getComments()
+  },
+  method:{
+  	getComments(){
+  		this.$http.get('api/getcomments/'+this.id+"?pageindex"+this.pageIndex).then({
+  		if(result.body.status ===0){
+  			this.comments=this.comments.concat(result.body.message);//数组拼接
+  		}else{
+  			Toast('评论加载失败')
+  		}
+  	})
+  	}
+  	
+  }
+  ```
+
+- 渲染数据
+
+  ```
+  v-for="(item,index) in comments" :key:"item.add_time"
+  
+  {{item.content === 'undefined'?'此用户很懒'：item.content}}
+  ```
+
+- 点击加载更多 ，则加载出更多评论
+
+  - 为加载更多绑定按钮，绑定点击事件，在事件中，请求下一页数据
+
+    ```
+    <mt-button type="danger" @click="getMore"></mt-button>
+    
+    getMore(){
+        this.pageIndex++;
+        this.getComments();
+    }
+    ```
+
+    
+
+  - 点击加载更多，让pageIndex++，然后重新调用this.getComments()方法重新获取新一页的数据，为了防止 新数据覆盖老数据，要用数组的拼接。
+
+    
 
   
 
