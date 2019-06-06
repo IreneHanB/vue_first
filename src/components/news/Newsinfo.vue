@@ -3,14 +3,14 @@
         
         <h1 class="title">{{newsinfo.title}}</h1>
         <p class="subtitle">
-            <span>发表时间:{{newsinfo.ptime | dataFormat}}</span>
-            <span>点击次数:{{newsinfo.tcount}}</span>
+            <span>发表时间:{{newsinfo.add_time | dataFormat}}</span>
+            <span>点击次数:{{newsinfo.click}}</span>
         </p>
         <p>
-            <span>作者：{{newsinfo.digest}}</span>
+            <span>作者：{{newsinfo.zhaiyao}}</span>
         </p>
         <hr>
-        <p class="content" v-html="newsinfo.link"></p>
+        <p class="content" v-html="newsinfo.content"></p>
 
         <div class="comment-container">
             <comment-box></comment-box>
@@ -24,7 +24,7 @@ export default {
   data(){
       return {
          // 没有r 不是router 啊宝贝！ 
-          id:this.$route.params.docid,
+          id:this.$route.params.id,
           newsinfo:[]
       }
   },
@@ -36,11 +36,11 @@ export default {
   },
   methods:{
       getnewsInfo(){
-          this.$http.get('https://www.apiopen.top/journalismApi').then(result=>{
-              console.log(result.body.data)
-              if(result.body.code = 200){
+          this.$http.get('https://easy-mock.com/mock/5cf7bb32f8c0832af378e0c1/books/getnew/'+this.id).then(result=>{
+              console.log(result.body.message);
+              if(result.body.status === 0){
                   
-                  this.newsinfo = result.body.data.tech[0];
+                  this.newsinfo = result.body.message;
                   
                   //console.log(result.body.data.tech)
                   //this.newsinfo = result.body.data.tech

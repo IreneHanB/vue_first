@@ -23,7 +23,7 @@ var router = new VueRouter({
        {path:'/search',component:SearchContainer},
 
        {path:'/home/newslist',component:NewsList},
-       {path:'/home/newsinfo/:docid',component:Newsinfo}
+       {path:'/home/newsinfo/:id',component:Newsinfo}
 
     ],
     linkActiveClass:'mui-active'

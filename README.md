@@ -30,7 +30,7 @@
 
 ## 概要介绍
 
-我的vue初体验，里面内容不重要，开源的接口失效也是常有的事。
+我的vue初体验
 
 ## 详细过程
 
@@ -501,7 +501,7 @@ Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
 
   scoped删除容易造成全局污染，但是这里的样式都在 newsinfo-container这个类下面。
 
-#### 评论部分
+#### 评论内容部分
 
 因为多处用到了这个评论，所以把它抽离为一个单独的组件
 
@@ -580,9 +580,15 @@ Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
 
   - 点击加载更多，让pageIndex++，然后重新调用this.getComments()方法重新获取新一页的数据，为了防止 新数据覆盖老数据，要用数组的拼接。
 
-    
+#### 评论发表部分
 
-  
+- 把文本框做双向数据绑定
+- 为发表按钮绑定一个事件
+- 校验评论内容是否为空，如果为空，则Toast提示用户，评论内容不能为空
+- 通过vue-resource发送一个请求，把评论内容提交给服务器
+- 当发表评论ok后，重新刷新列表，以查看最新的评论。
+
+
 
 ##制作首页App组件
 1.完成Header区域，使用的是Mint-UI中的Header组件
