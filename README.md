@@ -346,7 +346,7 @@ Vue.component(Header.name,Header);//手动注册
 
 ------
 
-#### 六宫格第一个子组件制作
+### 六宫格第一个子组件制作
 
 - 将 a链接 改成<router-link to="/home/newsList">
 
@@ -583,71 +583,93 @@ Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
 #### 评论发表部分
 
 - 把文本框做双向数据绑定
+
+  - 在comment.vue中
+
+    ```
+    <mt-button type="primary" size="large" @click="postComment"> 发表评论</mt-button>
+    ```
+
+    ```
+    postComment(){
+    	//校验是否为空
+    	if(this.mag.trim().length===0){
+    		return Toast('评论内容不能为空')
+    	}
+                //发表评论
+                //参数1：请求的url地址
+                //参数2：提交给服务器的数据对象{content：this.msg},msg.trim()可以清楚空格
+                //参数3：定义提交时候，表单中数据的样式{}
+                this.$http.post('api/postcomment'+this.$router.params.id,{content:this.msg.trim()}).then(function(){
+    				if(result.body.status === 0){
+                        //1.拼接出一个评论对象
+                        var cmt={user_name:"不要匿名",add_time:Date.now(),content:this.msg.trim()}
+                    }
+                    this.comments.unshift(cmt);
+                    this.msg="";
+                })
+            }
+    ```
+
+    在main.js中全局设置post时候表单数据格式的组织形式
+
 - 为发表按钮绑定一个事件
+
 - 校验评论内容是否为空，如果为空，则Toast提示用户，评论内容不能为空
+
 - 通过vue-resource发送一个请求，把评论内容提交给服务器
+
 - 当发表评论ok后，重新刷新列表，以查看最新的评论。
 
+  - 如果调用getComments方法 重新刷新评论列表的话，可能只能得到 最后一页的评论，前几页的评论获取不到，所以换一种思路：
 
-
-##制作首页App组件
-1.完成Header区域，使用的是Mint-UI中的Header组件
-2.制作底部的Tabber区域，使用的是MUI的Tabbar
-3.要在中间区域放置一个 router-view 来展示路由匹配到的组件
+    当评论成功后，在客户端，手动拼接出一个最新的评论对象，然后 调用 数组的unshift 方法，把最新的评论，追加到data中 comments的开头，这样，就能实现刷新评论列表的需求。
 
 
 
-## 用tabber改为router-link
+### 图片列表
 
-## 设置路由高亮
+#### 改造首页图片按钮为路由链接，并显示对应组件页面
 
-##点击tabber中路由链接，展示对应的路由组件
+​	创建>photo文件夹>PhotoList.vue，在router.js中，导入对应组件，配置路由关系
 
-##制作首页轮播图布局
-https://www.apiopen.top/novelApi
+#### 可滚动的顶部滑动条
 
-##加载首页轮播图数据
+寻找mui中的tab-top-webview-main.html，拷贝需要的代码，运行发现这一部分设置了全屏显示的类mui-fullscreen，所以把它删了
 
-##加载首页轮播图数据
-1.获取数据， 使用vue-resource
-2.使用vue-resource的this.$http.get
-3.获取到的数据，要保存到data身上
-4.使用v-for循环渲染每个item项
+#### 滑动条需要初始化后才可以正常使用
 
+通过检查官方文档，发现这是JS组件，需要被初始化一下
 
-##改造 九宫格 区域样式 
+- 在lib>mui>js>导入mui.js
 
-##改造新闻资讯路由链接
+  ```
+  并且在PhotoList.vue
+  import mui from '../../lib/mui/js/mui.mui.js'
+  ```
 
-##新闻资讯 页面 制作
-1.绘制页面（MUI 中 media-list）
-2.使用vue-resource获取数据  https://www.apiopen.top/journalismApi
-3.渲染真实数据
+  
 
-##实现新闻列表 点击跳转到详情
-1.把列表中的每一项改造为router-link，同时，在跳转的时候应该提供唯一的ID标识符
-2.创建新闻详情的组件页面 NewsInfo.vue
-3.在 路由模块 中，将新闻详情的 路由地址和组件页面对应起来
+- 调用官方提供的方法 去初始化
 
-##实现新闻详情页面 的 页面布局 和 渲染
+  ```
+  mui('.mui-scroll-wrapper').scroll({
+  	deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+  });
+  ```
 
-##单独封装一个 comment.vue的评论子组件
-1.先创建一个单独的comment.vue组建模板
-2.在需要使用comment的组建的页面，先手动 导入comment 组件
-  + `import comment from './comment.vue'`
-3.在父组件中，使用'components'属性,将刚才导入comment组件，注册为自己的子组件
-4.将 注册子组件时候的注册名称， 以标签形式在页面中引用 即可
+- 我们在初始化滑动条的时候，导入了 mui.js，但是，控制台报错了。
 
-##获取所有的评论数据 显示到页面中
+  错误如下：Uncaught TypeError: 'caller', 'callee', and 'arguments' properties may not be accessed on strict mode functions or the arguments objects for calls to them
 
-##实现点击加载更多评论的功能（未实现）
-1.为加载更多按钮 ，绑定点击事件 ，在事件中，请求下一页数据
-2.点击加载更多，让 pageIndex++ ， 然后重新调用 this.getComments() 方法重新获取最新一页的数据
-3.为了防止 新数据 覆盖老数据的情况，我们在 点击加载更多的时候，每当获取到新数据，应该让老数据调用 数组 的concat方法，拼接上新数组
+  经过我们合理的推测，觉得，可能是mui.js中用到了“caller”,"callee"和“arguments”在、这些东西，但是webpack打包好的bundle.js中，默认是启用严格模式的，所以这两者冲突了；
 
-##发表评论
-1.把文本框做双向数据绑定
-2.为发表按钮绑定一个事件
-3.校验评论内容是否为空，如果为空，则Toast 提示用户，评论内容不能为空
-4.通过vue-resource 发送一个请求，把评论内容提交给服务器
-5.当发表评论OK后，重新刷新列表，以查看最新的评论
+  解决方案：
+
+  1.把mui中的非严格模式的代码改掉，但是不现实；
+
+  2.把webpack打包时候的严格模式禁用掉。
+
+  npm install babel-plugin-transform-remove-strict-mode -D
+
+  在.babelrc下添加"transform-remove-strict-mode"

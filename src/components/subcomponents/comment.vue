@@ -2,8 +2,8 @@
     <div class="cmt-container">
         <h1>发表评论</h1>
         <hr>
-        <textarea name="" id="" cols="30" rows="10" placeholder="最多吐槽120字" maxlength="120"></textarea>
-        <mt-button type="primary" size="large">发表评论</mt-button>
+        <textarea name="" id="" cols="30" rows="10" placeholder="最多吐槽120字" maxlength="120" v-model="msg"></textarea>
+        <mt-button type="primary" size="large" @click="postComment"> 发表评论</mt-button>
         <div class="cmt-list">
             <div class="cmt-item" v-for="(item,index) in comments" :key="item.content">
                 <div class="cmt-title">
@@ -23,7 +23,8 @@ export default {
     data(){
         return{
             pageIndex:1,
-            comments:[]
+            comments:[],
+            msg:''//评论输入的内容
         }
     },
     created(){
@@ -40,8 +41,31 @@ export default {
                     }
                 }
             )
+        },
+        postComment(){
+            //发表评论
+            if(this.msg.trim().length===0){
+               return Toast("内容不能为空")
+            }
+            this.$http.post('https://www.easy-mock.com/mock/5cf7bb32f8c0832af378e0c1/books/postcomment/'+ this.$route.params.id,{content:this.mag}).then(function(result){
+                if(result.body.status === 0){
+                    var cmt={
+                        user_name:"不要匿名",
+                        add_time:Date.now(),
+                        content:this.msg
+                    };
+
+                    // 存在问题
+                    this.comments.unshift(cmt);
+                    //console.log(this.comments.unshift(cmt));
+                    this.msg="";
+                }else{
+                    Toast("发表失败")
+                }
+            });
         }
-    }
+    },
+    props:["id"]
 }
 </script>
 <style lang="scss" scoped>
