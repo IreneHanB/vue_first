@@ -53,7 +53,7 @@ export default {
     methods:{
         getLunbotu(){
             this.$http.get("https://www.apiopen.top/novelApi").then(result =>{
-                 console.log(result.body);
+                //console.log(result.body);
                 if(result.body.code=200){
                     this.lunbotuList = result.body.data
                 }else{

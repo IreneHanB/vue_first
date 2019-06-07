@@ -673,3 +673,7 @@ Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
   npm install babel-plugin-transform-remove-strict-mode -D
 
   在.babelrc下添加"transform-remove-strict-mode"
+
+- 刚进入图片分享页面的时候，滑动条无法正常工作，分析发现，如果要初始化 滑动条，必须要等DOM 元素加载完毕，所以把初始化 滚动条的代码，搬到了mounted 生命周期函数中。
+
+  
