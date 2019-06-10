@@ -10,21 +10,24 @@ import NewsList from './components/news/NewsList.vue'
 import Newsinfo from './components/news/Newsinfo.vue'
 import PhotoList from './components/photos/PhotoList.vue'
 import PhotoInfo from './components/photos/PhotoInfo.vue'
+import GoodsList from './components/goods/GoodsList.vue'
+
 Vue.use(VueRouter)
 
 var router = new VueRouter({
     routes:[
         // path中没有./home  写成/home ！！！ 一定要和页面上写的对应起来
         {path:'/',redirect:'/home'},
-       {path:'/home',component:HomeContainer},
-       {path:'/member',component:MemberContainer},
-       {path:'/shopcar',component:ShopcarContainer},
-       {path:'/search',component:SearchContainer},
+        {path:'/home',component:HomeContainer},
+        {path:'/member',component:MemberContainer},
+        {path:'/shopcar',component:ShopcarContainer},
+        {path:'/search',component:SearchContainer},
 
-       {path:'/home/newslist',component:NewsList},
-       {path:'/home/newsinfo/:id',component:Newsinfo},
-       {path:'/home/photolist',component:PhotoList},
-        {path:'/home/photoinfo',component:PhotoInfo}
+        {path:'/home/newslist',component:NewsList},
+        {path:'/home/newsinfo/:id',component:Newsinfo},
+        {path:'/home/photolist',component:PhotoList},
+        {path:'/home/photoinfo',component:PhotoInfo},
+        {path:'/home/goodslist',component:GoodsList}
     ],
     linkActiveClass:'mui-active'
 })

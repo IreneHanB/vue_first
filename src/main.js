@@ -35,9 +35,21 @@ Vue.use(MintUI)
 import 'mint-ui/lib/style.css'
 
 import VuePreview from 'vue-preview'
- 
+
 // defalut install
 Vue.use(VuePreview)
+
+// with parameters install
+// Vue.use(preview, {
+//   mainClass: 'pswp--minimal--dark',
+//   barsSize: {top: 0, bottom: 0},
+//   captionEl: false,
+//   fullscreenEl: false,
+//   shareEl: false,
+//   bgOpacity: 0.85,
+//   tapToClose: true,
+//   tapToToggleControls: false
+// })
 
 import app from './App.vue'
 

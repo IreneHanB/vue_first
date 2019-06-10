@@ -750,4 +750,9 @@ Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
 
 - 缩略图制作
 
-  使用vue-preview
+  使用vue-preview插件(https://github.com/LS1231/vue-preview)
+
+  把需要的内容copy一下
+
+### 商品购买
+
