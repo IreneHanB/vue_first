@@ -676,4 +676,63 @@ Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
 
 - 刚进入图片分享页面的时候，滑动条无法正常工作，分析发现，如果要初始化 滑动条，必须要等DOM 元素加载完毕，所以把初始化 滚动条的代码，搬到了mounted 生命周期函数中。
 
+- 当滑动条调试完成后，发现tabbar无法正常工作了，这时候，我们需要把每个tabbar按钮的样式中‘mui-tab-item’重新改一下名字
+
+- 渲染分类列表，并设置选中后高亮
+
+  ```
+  <a :class="['mui-control-item',item.id==0?'mui-active':'']" v-for="item in cates" :key="item.bid">
+  							{{item.bookname}}
+  						</a>
+  ```
+
   
+
+#### 制作图片列表区域
+
+- 找到mint-ui中懒加载lazy-load组件，根据lazy-load的使用文档，在main.js中导入组件，把样式和内容都copy到PhotoList.vue中
+
+- 根据分类id，获取图片列表，获取的方法getPhotoListByCateId(cateId)要调用两次
+
+  ```
+  created(){
+  		this.getAllCategory();
+  		this.getPhotoListByCateId(0);//默认进入页面就请求 所有图片列表的数据
+  	},
+  ```
+
+  ```
+  <a :class="['mui-control-item',item.id==0?'mui-active':'']" v-for="item in cates" :key="item.bid" @click="getPhotoListByCateId(item.id)">
+  ```
+
+- 美化列表，写样式
+
+- 到这一步还没有实现懒加载，但是懒加载的实现 不能按需导入了
+
+  ```
+  import MintUI from 'mint-ui'
+  Vue.use(MintUI)
+  import 'mint-ui/lib/style.css'
+  ```
+
+  
+
+#### 制作图片详情页面
+
+- 实现详情页面的数据
+
+  ```
+  id:this.$route.params.id //从路由中获取到的图片id
+  ```
+
+  ```
+  getPhotoInfo(){
+  	//获取图片详情
+  	this.$http.get('api/getimageInfo'+this.id).then(result=>{
+  	...
+  	})
+  }
+  ```
+
+  
+

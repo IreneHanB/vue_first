@@ -4,7 +4,7 @@
         <div id="slider" class="mui-slider">
 				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div class="mui-scroll">
-						<a :class="['mui-control-item',item.id==0?'mui-active':'']" v-for="item in cates" :key="item.bid">
+						<a :class="['mui-control-item',item.id==0?'mui-active':'']" v-for="item in cates" :key="item.bid" @click="getPhotoListByCateId(item.id)">
 							{{item.bookname}}
 						</a>
 
@@ -28,9 +28,18 @@
 						</a>
 					</div>
 				</div>
-
+				
 			</div>
-
+	<!-- 图片列表区域 -->
+					<ul class="photo-list">
+						<router-link v-for="item in list" :key="item.user_id" tag="li" to="/home/photoinfo">
+							<img v-lazy="item.thumb">
+							<div class="info">
+								<h1 class="info-title">{{item.name}}</h1>
+								<div class="info-body"></div>
+							</div>
+						</router-link>
+					</ul>
     </div>
 </template>
 <script>
@@ -39,11 +48,13 @@ import {Toast} from 'mint-ui'
 export default {
     data(){
         return{
-			cates:[]
+			cates:[],//分类数组
+			list:[]//图片列表数组
 		};
 	},
 	created(){
-		this.getAllCategory()
+		this.getAllCategory();
+		this.getPhotoListByCateId(0);//默认进入页面就请求 所有图片列表的数据
 	},
     mounted(){
         //生命周期最后一个，当组件中的DOM结构被渲染好并放到页面中后，会执行这个钩子函数
@@ -63,6 +74,17 @@ export default {
 					Toast("获取失败")
 				}
 			})
+		},
+		getPhotoListByCateId(cateId){
+			//根据 分类ID，获取图片列表
+			this.$http.get('https://api.apiopen.top/musicBroadcasting').then(
+				
+					result=>{
+							//console.log(result.body.result[0].channellist)
+							this.list=result.body.result[0].channellist;
+						
+					}
+				)
 		}
     }
 }
@@ -71,4 +93,45 @@ export default {
  * { 
      touch-action: pan-y; 
      } 
+
+.photo-list {
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+  padding-bottom: 0;
+  li {
+    background-color: #ccc;
+    text-align: center;
+    margin-bottom: 10px;
+    box-shadow: 0 0 9px #999;
+    position: relative;
+    img {
+      width: 100%;
+      vertical-align: middle;
+    }
+    img[lazy="loading"] {
+      width: 40px;
+      height: 300px;
+      margin: auto;
+    }
+
+    .info {
+      color: white;
+      text-align: center;
+      position: absolute;
+      top: 35%;
+	  line-height: 50px;
+      background-color: rgba(0, 0, 0, 0.4);
+      height: 50px;
+	  width: 100%;
+      .info-title {
+        font-size: 14px;
+		line-height: 50px;
+      }
+      .info-body {
+        font-size: 13px;
+      }
+    }
+  }
+}
 </style>

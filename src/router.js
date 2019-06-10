@@ -9,7 +9,7 @@ import SearchContainer from './components/tabbar/SearchContainer.vue'
 import NewsList from './components/news/NewsList.vue'
 import Newsinfo from './components/news/Newsinfo.vue'
 import PhotoList from './components/photos/PhotoList.vue'
-
+import PhotoInfo from './components/photos/PhotoInfo.vue'
 Vue.use(VueRouter)
 
 var router = new VueRouter({
@@ -23,8 +23,8 @@ var router = new VueRouter({
 
        {path:'/home/newslist',component:NewsList},
        {path:'/home/newsinfo/:id',component:Newsinfo},
-       {path:'/home/photolist',component:PhotoList}
-
+       {path:'/home/photolist',component:PhotoList},
+        {path:'/home/photoinfo',component:PhotoInfo}
     ],
     linkActiveClass:'mui-active'
 })

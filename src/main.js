@@ -22,11 +22,17 @@ import router from './router.js'
 import './lib/mui/css/icons-extra.css'
 import './lib/mui/css/mui.css'
 
-import { Header,Swipe,SwipeItem,Button } from "mint-ui"
-Vue.component(Header.name,Header);
-Vue.component(Swipe.name,Swipe),
-Vue.component(SwipeItem.name,SwipeItem),
-Vue.component(Button.name,Button)
+// import { Header,Swipe,SwipeItem,Button } from "mint-ui"
+// Vue.component(Header.name,Header);
+// Vue.component(Swipe.name,Swipe),
+// Vue.component(SwipeItem.name,SwipeItem),
+// Vue.component(Button.name,Button)
+// import { Lazyload } from 'mint-ui';
+//Vue.use(Lazyload);
+
+import MintUI from 'mint-ui'
+Vue.use(MintUI)
+import 'mint-ui/lib/style.css'
 
 
 import app from './App.vue'
