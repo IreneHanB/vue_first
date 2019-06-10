@@ -756,3 +756,18 @@ Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
 
 ### 商品购买
 
+- 设置路由链接
+
+- 设置goodlist的样式
+
+  ```
+  	display: flex;
+      flex-direction: column;//改成列为主轴
+      justify-content: space-between;//向（这里是上下）两边贴近
+  ```
+
+### 尝试在手机上项目的预览和测试
+
+- 保证手机和开发项目的电脑处于同一个wifi环境中，也就是说 手机可以访问到电脑的IP
+- 打开自己的中package.json文件，在dev脚本中，添加一个--host指令，把当前电脑的wifi ip地址，设置为--host的指令值
+  - 如何查看自己电脑所处的wifi的IP呢？在cmd终端中运行‘ipconfig’
