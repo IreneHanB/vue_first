@@ -719,7 +719,7 @@ Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
 
 #### 制作图片详情页面
 
-- 实现详情页面的数据
+- 实现详情页面的数据，并添加样式
 
   ```
   id:this.$route.params.id //从路由中获取到的图片id
@@ -734,5 +734,20 @@ Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
   }
   ```
 
-  
+- 导入评论组件
 
+  ```
+  // 1. 导入评论子组件
+  import comment from "../subcomponents/comment.vue";
+  
+  
+  
+  components: {
+      // 注册 评论子组件
+      "cmt-box": comment
+    }
+  ```
+
+- 缩略图制作
+
+  使用vue-preview
