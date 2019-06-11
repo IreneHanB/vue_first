@@ -809,7 +809,53 @@ Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
 
 #### 商品详情
 
-- 找到mui中的card.html
+- 找到mui中的card.html，copy一下
+
+- 将轮播图抽离为单独组件
+
+  - 新建subcomponent>swiper.vue，然后写好 template 和style  ，不需要业务逻辑，因为是 谁需要就给谁来传数据，但是要接收一下传进来的数据
+
+    ```
+    <template>
+        <div>
+            <!-- 谁使用此轮播图，谁来传递lunbotulist -->
+            <!-- 这里 应该是 父组件向子组件传值 -->
+            <mt-swipe :auto="4000">
+            <mt-swipe-item v-for="item in lunbotuList" :key="item.bid">
+                <!-- 我们要计算表达式，要在普通属性前面加上v-bind（：） -->
+                <img :src="item.book_cover" alt="">
+            </mt-swipe-item>
+            </mt-swipe>
+        </div>
+    </template>
+    <script>
+    export default {
+        props:['lunbotuList']//接受传过来的lunbotulist
+    }
+    </script>
+    <style lang="scss" scoped>
+    .mint-swipe{
+    ...
+    }
+    </style>
+    
+    ```
+
+  - 然后，在HomeContaine.vue中 使用，并把数据传进去
+
+    ```
+    		<!-- 轮播图区域 -->
+            <swiper :lunbotuList="lunbotuList"></swiper>
+            
+            import swiper from '../subcomponents/swiper.vue'
+            
+            components:{
+            swiper
+        }
+        
+    ```
+
+    
 
 ### 尝试在手机上项目的预览和测试
 

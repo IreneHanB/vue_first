@@ -2,12 +2,7 @@
     <div>
         
         <!-- 轮播图区域 -->
-        <mt-swipe :auto="4000">
-        <mt-swipe-item v-for="item in lunbotuList" :key="item.bid">
-            <!-- 我们要计算表达式，要在普通属性前面加上v-bind（：） -->
-            <img :src="item.book_cover" alt="">
-        </mt-swipe-item>
-        </mt-swipe>
+        <swiper :lunbotuList="lunbotuList"></swiper>
 
         <!-- 九宫格到六宫格 -->
 
@@ -41,6 +36,9 @@
 </template>
 <script>
 import {Toast} from 'mint-ui'
+
+import swiper from '../subcomponents/swiper.vue'
+
 export default {
     data(){
         return {
@@ -61,32 +59,15 @@ export default {
                 }
            })
         }
+    },
+    components:{
+        swiper
     }
     
 }
 </script>
 <style lang="scss" scoped>
-.mint-swipe{
-    height: 300px;
-    // .mint-swipe-item:nth-child(1){
-    //     background-color: pink
-    // }
-    .mint-swipe-item{
-        &:nth-child(1){
-            background-color: blueviolet;
-        }
-        &:nth-child(2){
-            background-color: blue;
-        }
-        &:nth-child(3){
-            background-color: cyan;
-        }
-        img{
-            width:100%;
-            height: 100%;
-        }
-    }
-}
+
 .mui-grid-view.mui-grid-9{
     background: #fff;
     border:none;
