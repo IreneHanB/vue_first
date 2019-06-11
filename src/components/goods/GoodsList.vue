@@ -1,6 +1,22 @@
 <template>
     <div class="good-list">
-        <div class="goods-item" v-for="item in goodslist" :key="item.artiostid">
+        <!-- <router-link class="goods-item" v-for="item in goodslist" :key="item.artiostid" to="/home/goodsinfo" tag="div">
+            <img :src="item.avatar" alt="">
+            <h1 class="title">{{item.name}}</h1>
+            <div class="info">
+                <p class="price">
+                    <span class="now">111</span>
+                    <span class="old">111</span>
+                </p>
+                <p class="sell">
+                    <span>热卖中</span>
+                    <span>剩余70件</span>
+                </p>
+            </div>
+        </router-link>
+        <mt-button type="danger" size="large" @click="getMore()">加载更多</mt-button> -->
+
+        <div class="goods-item" v-for="item in goodslist" :key="item.artiostid" to="/home/goodsinfo" @click="goDetail(item.id)" >
             <img :src="item.avatar" alt="">
             <h1 class="title">{{item.name}}</h1>
             <div class="info">
@@ -14,7 +30,7 @@
                 </p>
             </div>
         </div>
-
+        <mt-button type="danger" size="large" @click="getMore()">加载更多</mt-button>
     </div>
 </template>
 <script>
@@ -35,6 +51,15 @@ export default {
                 //console.log(result.body);
                 this.goodslist=result.body.result[1].channellist
             })
+        },
+        getMore(){
+            this.$http.get('https://api.apiopen.top/musicBroadcasting').then(result=>{
+                this.goodslist=this.goodslist.concat(result.body.result[1].channellist);
+            })
+        },
+        goDetail(id){
+            //使用JS的形式进行路由导航
+            this.$router.push('/home/goodsinfo')
         }
     }
     

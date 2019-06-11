@@ -11,7 +11,7 @@ import Newsinfo from './components/news/Newsinfo.vue'
 import PhotoList from './components/photos/PhotoList.vue'
 import PhotoInfo from './components/photos/PhotoInfo.vue'
 import GoodsList from './components/goods/GoodsList.vue'
-
+import GoodsInfo from './components/goods/GoodsInfo.vue'
 Vue.use(VueRouter)
 
 var router = new VueRouter({
@@ -27,7 +27,8 @@ var router = new VueRouter({
         {path:'/home/newsinfo/:id',component:Newsinfo},
         {path:'/home/photolist',component:PhotoList},
         {path:'/home/photoinfo',component:PhotoInfo},
-        {path:'/home/goodslist',component:GoodsList}
+        {path:'/home/goodslist',component:GoodsList},
+        {path:'/home/goodsinfo',component:GoodsInfo}
     ],
     linkActiveClass:'mui-active'
 })

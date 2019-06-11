@@ -754,7 +754,11 @@ Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
 
   把需要的内容copy一下
 
+***
+
 ### 商品购买
+
+#### 商品列表
 
 - 设置路由链接
 
@@ -765,6 +769,47 @@ Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
       flex-direction: column;//改成列为主轴
       justify-content: space-between;//向（这里是上下）两边贴近
   ```
+
+- 商品详情制作
+
+  在网页中，有两种跳转方式：
+
+  1.使用a标签 的形式叫做 标签跳转
+
+  router-link 就属于标签跳转
+
+  2.使用window.location.href的形式，叫做编程式导航(https://router.vuejs.org/zh/guide/essentials/navigation.html)
+
+  @click=" goDetail(item.id) "
+
+  ```
+   goDetail(id){
+              //使用JS的形式进行路由导航
+              this.$router.push('/home/goodsinfo')
+              
+              各种方式：
+              // 字符串
+              this.$router.push('/home/goodsinfo'+id)
+  
+              // 对象
+              this.$router.push({ path: '/home/goodsinfo'+id })
+  
+              // 命名的路由
+              this.$router.push({ name: 'goodsinfo', params: { id }})//这个同时要在路由中定义name
+          }
+  ```
+
+  
+
+  **注意：区分this.$route和this.$router**
+
+  其中：this.$toute是路由参数对象，所有路由中的参数，params,query都属于它
+
+  其中：this.$router是一个路由导航对象，用它可以方便的使用JS代码，实现路由的前进、后退、跳转到新的URL地址
+
+#### 商品详情
+
+- 找到mui中的card.html
 
 ### 尝试在手机上项目的预览和测试
 
