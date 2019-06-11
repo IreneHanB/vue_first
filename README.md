@@ -855,7 +855,63 @@ Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
         
     ```
 
+  - 轮播图不好看的问题
+
+    ```
+    <!-- 分析：为什么 商品评论中的 轮播图那么丑： -->
+      <!-- 1. 首页中的图片，它的宽和高，都是 使用了 100% 的宽度 -->
+      <!-- 2. 在商品详情页面中，轮播图的 图片，如果也使用 宽高 为 100%的话，页面不好看 -->
+      <!-- 3. 商品详情页面中的轮播图，期望 高度是 100%， 但是 宽度为 自适应 -->
+      <!-- 4. 经过分析，得到 问题的原因： 首页中的轮播图 和 详情中的轮播图，分歧点是 宽度到底是 100% 还是 自适应 -->
+      <!-- 5. 既然这两个 轮播图，其它方面都是没有冲突的，只是 宽度有分歧， 那么，我们可以定义一个 属性，让 使用轮播图的 调用者，手动指定 是否为 100% 的宽度 -->
+    ```
+
+  - 商品购买区域，制作大致的样子，购买数量找到 mui 中的numbox.html，把它封装为一个单独的组件subcomponents>goodsinfo_number.vue
+
+    然后将numbox.html中有用的代码放进去
+
+    在goodlist中 导入一下，添加组件，在html中写上标签
+
+  - 但是数量增加 暂时还不能用， 查看文档(http://dev.dcloud.net.cn/mui/ui/#numbox)，然后在 goodsinfo_number 导入js文件，初始化一下组件
+
+    ```
+    import mui from "../../lib/mui/js/mui.min.js";
     
+    
+    mounted() {
+        // 初始化数字选择框组件
+        mui(".mui-numbox").numbox();
+        console.log(this.max);
+      },
+    ```
+
+  - 使用编程式导航跳转到 各自的页面，然后新建组件，在router中注册一下
+
+    ```
+    goDesc(){
+                //点击使用编程式导航跳转到 图文介绍页面
+                this.$router.push({
+                    name:'goodsdesc'
+                    
+                });
+            },
+            goComment(){
+                this.$router.push({
+                    name:'goodscomment'
+                    
+                });
+            }
+    ```
+
+    
+
+  
+
+  
+
+
+
+***
 
 ### 尝试在手机上项目的预览和测试
 
