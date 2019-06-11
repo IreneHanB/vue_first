@@ -903,10 +903,45 @@ Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
             }
     ```
 
-    
+  - 加入购物车的小动画
 
+    ```
+   		<transition
+            @before-enter="beforeEnter"
+            @enter="enter"
+            @after-enter="afterEnter">
+            <div class="ball" v-show="ballFlag" ref="ball"></div>
+            </transition>
+            
+            <mt-button type="danger" size="small" @click="addToShopCar">加入购物车</mt-button>
+            
+            
+            
+            
+            addToShopCar(){
+                //添加到购物车
+                this.ballFlag = !this.ballFlag;
+            },
+            beforeEnter(el){
+                el.style.transform="translate(0,0)";
+            },
+            enter(el,done){
+                el.offsetWidth;
+                el.style.transform="translate(93px,230px)";
+                el.style.transition = "all 1s ease";
+                el.style.transition = "all 1s ease";
+                
+                done()
+            },
+            afterEnter(el){
+                this.ballFlag=!this.ballFlag;
+            }
+    ```
   
-
+    
+  
+  **注意：（https://cubic-bezier.com/#.17,.67,.83,.67）**
+  
   
 
 

@@ -1,5 +1,16 @@
 <template>
-    <div class="goodsinfo-cantainer">
+    <div class="goodsinfo-container">
+            <transition
+        @before-enter="beforeEnter"
+        @enter="enter"
+        @after-enter="afterEnter">
+        <div class="ball" v-show="ballFlag" ref="ball"></div>
+        </transition>
+            
+        
+       
+
+       
         <!-- 商品轮播图区域 -->
         <div class="mui-card">
 				<div class="mui-card-content">
@@ -22,7 +33,7 @@
                         </p>
                         <p>
                         <mt-button type="primary" size="small">立即购买</mt-button>
-                        <mt-button type="danger" size="small" >加入购物车</mt-button>
+                        <mt-button type="danger" size="small" @click="addToShopCar">加入购物车</mt-button>
                         <!-- 分析： 如何实现加入购物车时候，拿到 选择的数量 -->
                         <!-- 1. 经过分析发现： 按钮属于 goodsinfo 页面， 数字 属于 numberbox 组件 -->
                         <!-- 2. 由于涉及到了父子组件的嵌套了，所以，无法直接在 goodsinfo 页面zhong 中获取到 选中的商品数量值-->
@@ -56,7 +67,9 @@
 export default {
     data(){
         return{
-            lunbotuList:[]
+            lunbotuList:[],
+            ballFlag: false, // 控制小球的隐藏和显示的标识符
+            //selectedCount: 1 // 保存用户选中的商品数量， 默认，认为用户买1个
         }
     },
     created(){
@@ -85,6 +98,22 @@ export default {
                 name:'goodscomment'
                 
             });
+        },
+        addToShopCar(){
+            //添加到购物车
+            this.ballFlag = !this.ballFlag;
+        },
+        beforeEnter(el){
+            el.style.transform="translate(0,0)";
+        },
+        enter(el,done){
+            el.offsetWidth;
+            el.style.transform="translate(93px,230px)";
+            el.style.transition = "all 1s cubic-bezier(.4,-0.3,1,0.68)";
+            done()
+        },
+        afterEnter(el){
+            this.ballFlag=!this.ballFlag;
         }
     },
     components:{
@@ -94,6 +123,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
 .goodsinfo-container {
   background-color: #eee;
   overflow: hidden;
@@ -103,18 +133,15 @@ export default {
     font-size: 16px;
     font-weight: bold;
   }
-
-
-
-  .ball {
+   .ball {
     width: 15px;
     height: 15px;
     border-radius: 50%;
     background-color: red;
     position: absolute;
     z-index: 99;
-    top: 390px;
-    left: 146px;
+    top: 500px;
+    left: 106px;
   }
 }
 </style>
