@@ -1,8 +1,8 @@
 <template>
     <div class="good-list">
-        <div class="goods-item">
-            <img src="http://img.kaiyanapp.com/57472e13fd2b6c9655c8a600597daf4d.png?imageMogr2/quality/60/format/jpg" alt="">
-            <h1 class="title">1111</h1>
+        <div class="goods-item" v-for="item in goodslist" :key="item.artiostid">
+            <img :src="item.avatar" alt="">
+            <h1 class="title">{{item.name}}</h1>
             <div class="info">
                 <p class="price">
                     <span class="now">111</span>
@@ -14,38 +14,29 @@
                 </p>
             </div>
         </div>
-        <div class="goods-item">
-            <img src="http://img.kaiyanapp.com/57472e13fd2b6c9655c8a600597daf4d.png?imageMogr2/quality/60/format/jpg" alt="">
-            <h1 class="title"></h1>
-            <div class="info">
-                <p class="price">
-                    <span class="now"></span>
-                    <span class="old"></span>
-                </p>
-                <p class="sell">
-                    <span>热卖中</span>
-                    <span>剩余70件</span>
-                </p>
-            </div>
-        </div>
-        <div class="goods-item">
-            <img src="http://img.kaiyanapp.com/57472e13fd2b6c9655c8a600597daf4d.png?imageMogr2/quality/60/format/jpg" alt="">
-            <h1 class="title"></h1>
-            <div class="info">
-                <p class="price">
-                    <span class="now"></span>
-                    <span class="old"></span>
-                </p>
-                <p class="sell">
-                    <span>热卖中</span>
-                    <span>剩余70件</span>
-                </p>
-            </div>
-        </div>
+
     </div>
 </template>
 <script>
 export default {
+    data(){
+        return{
+            //data是往自己组件内部挂载一些私有数据
+            //pageIndex:1,
+            goodslist:[]
+        }
+    },
+    created(){
+        this.getGoodsList();
+    },
+    methods:{
+        getGoodsList(){
+            this.$http.get('https://api.apiopen.top/musicBroadcasting').then(result=>{
+                //console.log(result.body);
+                this.goodslist=result.body.result[1].channellist
+            })
+        }
+    }
     
 }
 </script>

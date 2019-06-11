@@ -770,4 +770,8 @@ Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss"){
 
 - 保证手机和开发项目的电脑处于同一个wifi环境中，也就是说 手机可以访问到电脑的IP
 - 打开自己的中package.json文件，在dev脚本中，添加一个--host指令，把当前电脑的wifi ip地址，设置为--host的指令值
-  - 如何查看自己电脑所处的wifi的IP呢？在cmd终端中运行‘ipconfig’
+  - 如何查看自己电脑所处的wifi的IP呢？在cmd终端中运行   ipconfig   即可查看
+  - 只要保证手机和电脑连的是同一个wifi就可以在手机上查看效果。
+
+- 在手机上测试后，发现 图片列表 的分类点击出不来的情况（这里我没有接口，所以没有实现），可以把  @click改成 @tap 但是这个只能在mui中使用
+
